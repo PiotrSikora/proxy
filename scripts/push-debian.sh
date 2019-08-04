@@ -23,12 +23,16 @@
 #   -p gs://istio-release/release/0.2.1/deb
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
-BAZEL_BUILD_ARGS="${BAZEL_BUILD_ARGS}"
 BAZEL_TARGET='//tools/deb:istio-proxy'
 BAZEL_BINARY="${ROOT}/bazel-bin/tools/deb/istio-proxy"
 ISTIO_VERSION=''
 GCS_PATH=""
 OUTPUT_DIR=""
+
+# Common build flags for the bazel build command.
+if [[ "$(uname)" != "Darwin" && "${BAZEL_BUILD_ARGS}" != *"--config=libc++"* ]]; then
+  BAZEL_BUILD_ARGS="${BAZEL_BUILD_ARGS} --config=libc++"
+fi
 
 set -o errexit
 set -o nounset
