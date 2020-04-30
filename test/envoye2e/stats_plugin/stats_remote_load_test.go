@@ -50,8 +50,8 @@ filter_chains:
                 code:
                   remote:
                     http_uri:
-                      uri: https://storage.cloud.google.com/istio-build/proxy/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
-                      cluster: storage.cloud.google.com
+                      uri: http://plevyak.com/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
+                      cluster: plevyak.com
                       timeout: 10s
                     sha256: d2b63d70af78690e377bc9989ace94ad8889ef45c2307f605c9e149c226a3535
               configuration: |
@@ -68,20 +68,19 @@ filter_chains:
               cluster: inbound|9080|http|server.default.svc.cluster.local
               timeout: 0s`
 
-const StorageCluster = `- name: storage.cloud.google.com
+const StorageCluster = `- name: plevyak.com
   connect_timeout: 10s
   type: STRICT_DNS
   dns_refresh_rate: 5s
-  http2_protocol_options: {}
   load_assignment:
-    cluster_name: storage.cloud.google.com
+    cluster_name: plevyak.com
     endpoints:
     - lb_endpoints:
       - endpoint:
           address:
             socket_address:
-              address: storage.cloud.google.com
-              port_value: 443`
+              address: plevyak.com
+              port_value: 80`
 
 func TestStatsRemoteLoad(t *testing.T) {
 	params := driver.NewTestParams(t, map[string]string{
@@ -99,7 +98,7 @@ func TestStatsRemoteLoad(t *testing.T) {
 			&driver.Sleep{Duration: 10 * time.Second},
 			&driver.Repeat{N: 10,
 				Step: &driver.HTTPCall{
-					Port: params.Ports.ClientPort,
+					Port: params.Ports.ServerPort,
 					Body: "hello, world!",
 				},
 			},
