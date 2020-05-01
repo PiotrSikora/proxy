@@ -50,7 +50,7 @@ filter_chains:
                 code:
                   remote:
                     http_uri:
-                      uri: http://plevyak.com/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
+                      uri: uri: http://plevyak.com/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
                       cluster: plevyak.com
                       timeout: 10s
                     sha256: d2b63d70af78690e377bc9989ace94ad8889ef45c2307f605c9e149c226a3535
@@ -72,6 +72,8 @@ const StorageCluster = `- name: plevyak.com
   connect_timeout: 10s
   type: STRICT_DNS
   dns_refresh_rate: 5s
+  transport_socket:
+    name: envoy.transport_sockets.tls
   load_assignment:
     cluster_name: plevyak.com
     endpoints:
@@ -80,7 +82,7 @@ const StorageCluster = `- name: plevyak.com
           address:
             socket_address:
               address: plevyak.com
-              port_value: 80`
+              port_value: 443`
 
 func TestStatsRemoteLoad(t *testing.T) {
 	params := driver.NewTestParams(t, map[string]string{

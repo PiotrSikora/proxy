@@ -57,7 +57,7 @@ ENVOY_REPO = "envoy"
 #)
 local_repository(
     name = ENVOY_REPO,
-    path = "/home/jplevyak/work/istio/envoy",
+    path = "/home/jplev_google_com/istio/envoy",
 )
 
 load("@envoy//bazel:api_binding.bzl", "envoy_api_binding")
