@@ -50,7 +50,7 @@ filter_chains:
                 code:
                   remote:
                     http_uri:
-                      uri: uri: http://plevyak.com/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
+                      uri: https://plevyak.com/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
                       cluster: plevyak.com
                       timeout: 10s
                     sha256: d2b63d70af78690e377bc9989ace94ad8889ef45c2307f605c9e149c226a3535
