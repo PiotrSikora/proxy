@@ -71,6 +71,7 @@ filter_chains:
 const StorageCluster = `- name: storage.googleapis.com
   connect_timeout: 10s
   type: STRICT_DNS
+  dns_lookup_family: V4_ONLY
   dns_refresh_rate: 5s
   load_assignment:
     cluster_name: storage.googleapis.com
