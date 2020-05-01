@@ -39,25 +39,21 @@ bind(
 #
 # Commit time: 4/24/20
 # Used by scripts/generate-wasm.sh
-ENVOY_SHA = "ad7f85b4a264e731be03e05bceaf1aeb1c70641f"
+ENVOY_SHA = "32ca12f4fc89010250bdb93fd38511114397a04c"
 
-ENVOY_SHA256 = "6a36c3c709c05af8427cb4a0aaadd8abd54bcacb4b616255e28a6ef75d631665"
+ENVOY_SHA256 = "f1b8fa8c84fd4376b9e8f709ed056faa9b3f26bb8a69e87333b3aff8f7a45d65"
 
-ENVOY_ORG = "istio"
+ENVOY_ORG = "jplevyak"
 
 ENVOY_REPO = "envoy"
 
 # To override with local envoy, just pass `--override_repository=envoy=/PATH/TO/ENVOY` to Bazel or
 # persist the option in `user.bazelrc`.
-#http_archive(
-#    name = ENVOY_REPO,
-#    sha256 = ENVOY_SHA256,
-#    strip_prefix = ENVOY_REPO + "-" + ENVOY_SHA,
-#    url = "https://github.com/" + ENVOY_ORG + "/" + ENVOY_REPO + "/archive/" + ENVOY_SHA + ".tar.gz",
-#)
-local_repository(
+http_archive(
     name = ENVOY_REPO,
-    path = "/home/jplev_google_com/istio/envoy",
+    sha256 = ENVOY_SHA256,
+    strip_prefix = ENVOY_REPO + "-" + ENVOY_SHA,
+    url = "https://github.com/" + ENVOY_ORG + "/" + ENVOY_REPO + "/archive/" + ENVOY_SHA + ".tar.gz",
 )
 
 load("@envoy//bazel:api_binding.bzl", "envoy_api_binding")

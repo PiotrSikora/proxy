@@ -50,8 +50,8 @@ filter_chains:
                 code:
                   remote:
                     http_uri:
-                      uri: https://plevyak.com/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
-                      cluster: plevyak.com
+                      uri: http://storage.googleapis.com/istio-build/proxy/stats-d1dd3cef40fd1e78d7840a6d58f2c351cbc8add4.wasm
+                      cluster: storage.googleapis.com
                       timeout: 10s
                     sha256: d2b63d70af78690e377bc9989ace94ad8889ef45c2307f605c9e149c226a3535
               configuration: |
@@ -68,21 +68,19 @@ filter_chains:
               cluster: inbound|9080|http|server.default.svc.cluster.local
               timeout: 0s`
 
-const StorageCluster = `- name: plevyak.com
+const StorageCluster = `- name: storage.googleapis.com
   connect_timeout: 10s
   type: STRICT_DNS
   dns_refresh_rate: 5s
-  transport_socket:
-    name: envoy.transport_sockets.tls
   load_assignment:
-    cluster_name: plevyak.com
+    cluster_name: storage.googleapis.com
     endpoints:
     - lb_endpoints:
       - endpoint:
           address:
             socket_address:
-              address: plevyak.com
-              port_value: 443`
+              address: storage.googleapis.com
+              port_value: 80`
 
 func TestStatsRemoteLoad(t *testing.T) {
 	params := driver.NewTestParams(t, map[string]string{
